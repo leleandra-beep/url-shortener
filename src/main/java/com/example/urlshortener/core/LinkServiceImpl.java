@@ -49,7 +49,15 @@ public class LinkServiceImpl implements LinkService {
         // Комбинация ownerId и url гарантирует уникальность для разных пользователей
         String seed = ownerId.toString() + url + System.nanoTime();
         int hash = Math.abs(seed.hashCode());
-        return "u" + Integer.toString(hash, 36).substring(0, 6);
+        String encoded = Integer.toString(hash, 36);
+
+        // Если строка короче 6 символов, добиваем её нулями слева (или в конце)
+        while (encoded.length() < 6) {
+            encoded += "0";
+        }
+
+        // Теперь смело берем первые 6 символов
+        return "u" + encoded.substring(0, 6);
     }
 
     @Override
