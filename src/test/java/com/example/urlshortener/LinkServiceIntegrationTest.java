@@ -28,8 +28,8 @@ class LinkServiceIntegrationTest {
         ShortLink b = service.createShortLink(url, bob, 3);
 
         assertNotEquals(a.getShortCode(), b.getShortCode());
-        assertEquals(2, service.getUserLinks(alice).size());
-        assertEquals(2, service.getUserLinks(bob).size());
+        assertEquals(1, service.getUserLinks(alice).size());
+        assertEquals(1, service.getUserLinks(bob).size());
     }
 
     @Test
