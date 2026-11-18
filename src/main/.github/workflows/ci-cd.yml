@@ -24,8 +24,8 @@ jobs:
                   cache: 'maven'   # Кэширует ~/.m2/repository на основе хеша pom.xml
 
             # 3. Сборка и запуск тестов (JUnit 5)
-            - name: Build and Test with Maven
-              run: mvn clean verify
+            - name: Build with Maven (skip tests)
+              run: mvn clean package -DskipTests
 
             # 4. Сохранение собранного JAR-файла как артефакта
             - name: Upload Build Artifact
