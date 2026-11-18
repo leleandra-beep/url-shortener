@@ -2,29 +2,33 @@ name: Java CI/CD Pipeline
 
 on:
     push:
-        branches: [ "main" ]
+        branches: [ "main", "master" ]
     pull_request:
-        branches: [ "main" ]
+        branches: [ "main", "master" ]
 
 jobs:
     build-and-test:
         runs-on: ubuntu-latest
 
         steps:
+            # 1. Получение кода из репозитория
             - name: Checkout code
               uses: actions/checkout@v4
 
+            # 2. Установка JDK 17 с автоматическим кэшированием зависимостей Maven
             - name: Set up JDK 17
               uses: actions/setup-java@v4
               with:
                   java-version: '17'
                   distribution: 'temurin'
-                  cache: 'maven'
+                  cache: 'maven'   # Кэширует ~/.m2/repository на основе хеша pom.xml
 
-            - name: Build and test with Maven
-              run: mvn -B clean verify
+            # 3. Сборка и запуск тестов (JUnit 5)
+            - name: Build and Test with Maven
+              run: mvn clean verify
 
-            - name: Upload build artifact
+            # 4. Сохранение собранного JAR-файла как артефакта
+            - name: Upload Build Artifact
               uses: actions/upload-artifact@v4
               with:
                   name: url-shortener-jar
